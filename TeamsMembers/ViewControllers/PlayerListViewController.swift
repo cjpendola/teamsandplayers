@@ -10,14 +10,15 @@ import UIKit
 
 class PlayerListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-
+    // MARK: - Properties
     var team:Team?
     var player:Player?
-    
-    @IBOutlet weak var tableView: UITableView!
     let searchController = UISearchController(searchResultsController: nil)
     var filteredPlayers = [Player]()
     
+    // MARK: - IBOutlets
+    @IBOutlet weak var tableView: UITableView!
+
     override func viewDidLoad() {
         print("TeamDetail viewDidLoad")
         super.viewDidLoad()
@@ -61,9 +62,9 @@ class PlayerListViewController: UIViewController, UITableViewDelegate, UITableVi
         }
     }
     
+    
+    //// MARK: - Segue
     override func prepare(for segue:UIStoryboardSegue ,sender:Any?  ){
-        print("prepare")
-        dump(FirebaseManager.shared.players)
         if segue.identifier == "addEditTeam"
         {
             if let destinationVC = segue.destination as? PlayerViewController{
@@ -89,6 +90,7 @@ class PlayerListViewController: UIViewController, UITableViewDelegate, UITableVi
         }
     }
     
+    // MARK: - TableView Functions
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 200
     }
@@ -125,7 +127,6 @@ class PlayerListViewController: UIViewController, UITableViewDelegate, UITableVi
         
         cell.player = playerItem
         return cell
-        
     }
     
     

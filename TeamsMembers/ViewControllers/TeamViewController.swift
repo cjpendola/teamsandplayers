@@ -10,10 +10,12 @@ import UIKit
 
 class TeamViewController: UITableViewController {
     
-    
+    // MARK: - IBOutlets
     @IBOutlet weak var photoCell: ProfileTableViewCell!
     @IBOutlet weak var photoCellImage: RoundImageView!
     @IBOutlet weak var nameText: UITextField!
+    
+    // MARK: - Properties
     var team:Team?
     
     override func viewDidLoad(){
@@ -39,31 +41,26 @@ class TeamViewController: UITableViewController {
         }
     }
     
+    // MARK: - IBAction
     @IBAction func saveTeamButtonTapped(_ sender: Any) {
         guard let image = photoCellImage.image, let nameText = nameText.text else {
             return
         }
         
-        
         if let team = team {
-            print("update team")
             FirebaseManager.shared.updateTeam(team:team, name:nameText, image: image) { (success) in
                 if(success) {
-                    print("succesfully update team")
                     self.navigationController?.popViewController(animated: false)
                 }
             }
         }
         else{
-            print("upload team")
             FirebaseManager.shared.uploadTeam(name:nameText, image: image) { (success) in
                 if(success) {
-                    print("succesfully upload team")
                     self.navigationController?.popViewController(animated: false)
                 }
             }
         }
-        
     }
 }
 

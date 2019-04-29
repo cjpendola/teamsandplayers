@@ -18,7 +18,6 @@ class FirebaseManager {
     
     var teams: [Team] = [] {
         didSet {
-            //NotificationCenter.default.post(name: Notification.Name(rawValue: "updateTeams"), object: nil)
         }
     }
     var players: [Player] = [] {
@@ -27,7 +26,6 @@ class FirebaseManager {
     }
     
     func fetchTeams(completion: @escaping (Bool) -> Void) {
-        print("fetchTeams")
         db.collection("team").addSnapshotListener { (querySnapshot, error) in
             if querySnapshot?.documents == nil || error != nil {
                 print("Error querying teams: \((error, error!.localizedDescription))")
@@ -39,14 +37,12 @@ class FirebaseManager {
                         self.teams.append(team)
                     }
                 }
-                print("Teams listed")
                 completion(true)
             }
         }
     }
     
     func fetchPLayer(team:Team,completion: @escaping (Bool) -> Void) {
-        print("fetchPLayer")
         guard let teamRef =  team.documentReference else{
             completion(false)
             return
@@ -63,7 +59,6 @@ class FirebaseManager {
                         self.players.append(player)
                     }
                 }
-                print("Players listed")
                 completion(true)
                 return
             }
@@ -82,7 +77,6 @@ class FirebaseManager {
                 completion(false)
                 return
             } else {
-                print("Document successfully removed!")
                 completion(true)
                 return
             }
@@ -102,13 +96,11 @@ class FirebaseManager {
                 completion(false)
                 return
             } else {
-                print("Document successfully removed!")
                 completion(true)
                 return
             }
         }
     }
-    
     
     func uploadTeam(name:String, image:UIImage, completion: @escaping(Bool) -> Void ){
        
@@ -154,8 +146,6 @@ class FirebaseManager {
             
             print( responseData )
             if let responseString = String(data: responseData, encoding: .utf8) {
-                print("uploaded to: \(responseString)")
-               
                 let team = Team(name: name, image: responseString, documentReference: nil)
                 let newDocumentID = UUID().uuidString
                 self.db.collection("team").document(newDocumentID).setData(team.dictionaryRepresentation) { error in
@@ -165,7 +155,6 @@ class FirebaseManager {
                         return
                     }
                     else{
-                        print("I added a team to firebase")
                         completion(true)
                         return
                     }
@@ -173,8 +162,6 @@ class FirebaseManager {
             }
         }).resume()
     }
-    
-    
     
     func updateTeam(team:Team,name:String, image:UIImage, completion: @escaping(Bool) -> Void ){
         
@@ -219,7 +206,6 @@ class FirebaseManager {
             }
             print( responseData )
             if let responseString = String(data: responseData, encoding: .utf8) {
-                print("uploaded to: \(responseString)")
                 teamRef.updateData([
                     "name" : name,
                     "image" : responseString,
@@ -235,11 +221,6 @@ class FirebaseManager {
             }
         }).resume()
     }
-    
-    
-    
-    
-    
     
     func uploadPlayer(team:Team, name:String, image:UIImage, height:String,weight :String, fouls:String, points:String, completion: @escaping(Bool) -> Void ){
         
@@ -285,8 +266,6 @@ class FirebaseManager {
             
             print( responseData )
             if let responseString = String(data: responseData, encoding: .utf8) {
-                print("uploaded to: \(responseString)")
-                
                 guard let teamRef = team.documentReference else {
                     completion(false)
                     return
@@ -300,7 +279,6 @@ class FirebaseManager {
                         return
                     }
                     else{
-                        print("I added a player to firebase")
                         teamRef.updateData([
                             "players" : FieldValue.arrayUnion([playerDocumentID])
                         ]) { error in
@@ -384,9 +362,6 @@ class FirebaseManager {
             }
         }).resume()
     }
-    
-    
-    
 }
 
 

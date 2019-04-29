@@ -10,16 +10,17 @@ import UIKit
 
 class PlayerViewController: UITableViewController {
     
+    // MARK: - IBOutlet
     @IBOutlet weak var photoCell: ProfileTableViewCell!
     @IBOutlet weak var photoCellImage: RoundImageView!
     @IBOutlet weak var nameText: UITextField!
-    
     @IBOutlet weak var heightText: UITextField!
     @IBOutlet weak var weightText: UITextField!
     @IBOutlet weak var foulsText: UITextField!
     @IBOutlet weak var Points: UITextField!
     
     
+    // MARK: - Properties
     var team:Team?
     var player:Player?
     
@@ -29,8 +30,6 @@ class PlayerViewController: UITableViewController {
         photoCell.delegate = self
         updateViews()
     }
-    
-    
     
     func updateViews(){
         guard let _ = team, let player = player else {
@@ -52,6 +51,7 @@ class PlayerViewController: UITableViewController {
         }
     }
     
+    // MARK: - IBAction
     @IBAction func saveTeamButtonTapped(_ sender: Any) {
         guard let team = team, let image = photoCellImage.image, let nameText = nameText.text ,let heightText = heightText.text ,let weightText = weightText.text ,let foulsText = foulsText.text ,let points = Points.text else {
             print("team or image nil");
@@ -59,19 +59,15 @@ class PlayerViewController: UITableViewController {
         }
         
         if let player = player {
-            print("update player")
             FirebaseManager.shared.updatePlayer(player:player,name:nameText, image: image, height: heightText , weight: weightText, fouls :foulsText, points: points ) { (success) in
                 if(success) {
-                    print("succesfully update team")
                     self.navigationController?.popViewController(animated: false)
                 }
             }
         }
         else{
-            print("upload team")
             FirebaseManager.shared.uploadPlayer(team:team,name:nameText, image: image, height: heightText , weight: weightText, fouls :foulsText, points: points ) { (success) in
                 if(success) {
-                    print("succesfully upload team")
                     self.navigationController?.popViewController(animated: false)
                 }
             }

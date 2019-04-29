@@ -10,12 +10,14 @@ import UIKit
 
 class TeamListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    
-    @IBOutlet weak var tableView: UITableView!
+    // MARK: - Properties
     let searchController = UISearchController(searchResultsController: nil)
     var filteredTeams = [Team]()
     var team:Team?
     
+    // MARK: - IBOutlets
+    @IBOutlet weak var tableView: UITableView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,6 +43,8 @@ class TeamListViewController: UIViewController, UITableViewDelegate, UITableView
         self.tableView.reloadData()
     }
     
+    
+    // MARK: - TableviewFunctions
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 200
     }
@@ -77,31 +81,6 @@ class TeamListViewController: UIViewController, UITableViewDelegate, UITableView
         return cell
     }
     
-    override func prepare(for segue:UIStoryboardSegue ,sender:Any?  ){
-        if segue.identifier == "teamDetail"
-        {
-            print("teamDetail")
-            if let indexPath = tableView.indexPathForSelectedRow {
-                if let destinationVC = segue.destination as? PlayerListViewController{
-                    var teamItem:Team
-                    if isFiltering() {
-                        teamItem = filteredTeams[indexPath.row]
-                    } else {
-                        teamItem = FirebaseManager.shared.teams[indexPath.row]
-                    }
-                    destinationVC.team = teamItem
-                }
-            }
-        }
-        if segue.identifier == "addEditTeam"
-        {
-            if let destinationVC = segue.destination as? TeamViewController{
-                destinationVC.team = team
-            }
-        }
-    }
-    
-    
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let delete = UITableViewRowAction(style: .destructive, title: "Delete") { (action, indexPath) in
             var teamItem:Team
@@ -133,6 +112,31 @@ class TeamListViewController: UIViewController, UITableViewDelegate, UITableView
         edit.backgroundColor = UIColor.blue
         
         return [delete, edit]
+    }
+    
+    // MARK: - Segue
+    override func prepare(for segue:UIStoryboardSegue ,sender:Any?  ){
+        if segue.identifier == "teamDetail"
+        {
+            print("teamDetail")
+            if let indexPath = tableView.indexPathForSelectedRow {
+                if let destinationVC = segue.destination as? PlayerListViewController{
+                    var teamItem:Team
+                    if isFiltering() {
+                        teamItem = filteredTeams[indexPath.row]
+                    } else {
+                        teamItem = FirebaseManager.shared.teams[indexPath.row]
+                    }
+                    destinationVC.team = teamItem
+                }
+            }
+        }
+        if segue.identifier == "addEditTeam"
+        {
+            if let destinationVC = segue.destination as? TeamViewController{
+                destinationVC.team = team
+            }
+        }
     }
     
     // MARK: - Private instance methods
