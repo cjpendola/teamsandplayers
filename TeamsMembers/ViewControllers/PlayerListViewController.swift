@@ -24,7 +24,7 @@ class PlayerListViewController: UIViewController, UITableViewDelegate, UITableVi
         
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search Teams"
+        searchController.searchBar.placeholder = "Search Players"
         navigationItem.searchController = searchController
         definesPresentationContext = true
         searchController.searchBar.delegate = self
@@ -36,14 +36,17 @@ class PlayerListViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        dump("viewDidAppear")
+        dump(FirebaseManager.shared.players)
+        dump(filteredPlayers)
         super.viewDidAppear(true)
-        //1self.tableView.reloadData()
+        self.player = nil
+        self.tableView.reloadData()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(true)
         FirebaseManager.shared.listenerPlayers?.remove()
-        FirebaseManager.shared.players = []
     }
     
     func updateViews(){
@@ -60,12 +63,28 @@ class PlayerListViewController: UIViewController, UITableViewDelegate, UITableVi
     
     override func prepare(for segue:UIStoryboardSegue ,sender:Any?  ){
         print("prepare")
+        dump(FirebaseManager.shared.players)
         if segue.identifier == "addEditTeam"
         {
-            print("addEditTeam")
             if let destinationVC = segue.destination as? PlayerViewController{
                 destinationVC.team = self.team
                 destinationVC.player = self.player
+            }
+        }
+        
+        if segue.identifier == "showPlayerDetail"
+        {
+            if let indexPath = tableView.indexPathForSelectedRow {
+                if let destinationVC = segue.destination as? DetailPlayerTableViewController{
+                    var playerItem:Player
+                    if isFiltering() {
+                        playerItem = filteredPlayers[indexPath.row]
+                    } else {
+                        playerItem = FirebaseManager.shared.players[indexPath.row]
+                    }
+                    destinationVC.team = self.team
+                    destinationVC.player = playerItem
+                }
             }
         }
     }
@@ -151,7 +170,6 @@ class PlayerListViewController: UIViewController, UITableViewDelegate, UITableVi
         filteredPlayers = FirebaseManager.shared.players.filter({ (player : Player) -> Bool in
             player.name.lowercased().contains(searchText.lowercased())
         })
-        print(filteredPlayers)
         tableView.reloadData()
     }
     

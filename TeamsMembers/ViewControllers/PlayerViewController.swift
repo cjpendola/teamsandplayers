@@ -14,6 +14,12 @@ class PlayerViewController: UITableViewController {
     @IBOutlet weak var photoCellImage: RoundImageView!
     @IBOutlet weak var nameText: UITextField!
     
+    @IBOutlet weak var heightText: UITextField!
+    @IBOutlet weak var weightText: UITextField!
+    @IBOutlet weak var foulsText: UITextField!
+    @IBOutlet weak var Points: UITextField!
+    
+    
     var team:Team?
     var player:Player?
     
@@ -24,6 +30,8 @@ class PlayerViewController: UITableViewController {
         updateViews()
     }
     
+    
+    
     func updateViews(){
         guard let _ = team, let player = player else {
             print("team or player is nil");
@@ -31,6 +39,10 @@ class PlayerViewController: UITableViewController {
         }
         
         nameText?.text = player.name
+        heightText?.text = player.height
+        weightText?.text = player.weight
+        foulsText?.text = player.fouls
+        Points?.text = player.points
         UtilsController.shared.fetchImage(image: player.image) { (image) in
             if(image != nil){
                 DispatchQueue.main.async {
@@ -41,14 +53,14 @@ class PlayerViewController: UITableViewController {
     }
     
     @IBAction func saveTeamButtonTapped(_ sender: Any) {
-        guard let team = team, let image = photoCellImage.image, let nameText = nameText.text else {
+        guard let team = team, let image = photoCellImage.image, let nameText = nameText.text ,let heightText = heightText.text ,let weightText = weightText.text ,let foulsText = foulsText.text ,let points = Points.text else {
             print("team or image nil");
             return
         }
         
         if let player = player {
             print("update player")
-            FirebaseManager.shared.updatePlayer(player:player,name:nameText, image: image) { (success) in
+            FirebaseManager.shared.updatePlayer(player:player,name:nameText, image: image, height: heightText , weight: weightText, fouls :foulsText, points: points ) { (success) in
                 if(success) {
                     print("succesfully update team")
                     self.navigationController?.popViewController(animated: false)
@@ -57,7 +69,7 @@ class PlayerViewController: UITableViewController {
         }
         else{
             print("upload team")
-            FirebaseManager.shared.uploadPlayer(team:team,name:nameText, image: image) { (success) in
+            FirebaseManager.shared.uploadPlayer(team:team,name:nameText, image: image, height: heightText , weight: weightText, fouls :foulsText, points: points ) { (success) in
                 if(success) {
                     print("succesfully upload team")
                     self.navigationController?.popViewController(animated: false)

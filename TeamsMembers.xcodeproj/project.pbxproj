@@ -25,6 +25,7 @@
 		34414AF822755AFE00F749EA /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34414AF722755AFE00F749EA /* PlayerViewController.swift */; };
 		34414AFA22755C6E00F749EA /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34414AF922755C6E00F749EA /* Player.swift */; };
 		34414AFC2276050600F749EA /* PlayerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34414AFB2276050600F749EA /* PlayerTableViewCell.swift */; };
+		34F0A3D32276B5AF00B68F89 /* DetailPlayerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F0A3D22276B5AF00B68F89 /* DetailPlayerTableViewController.swift */; };
 		A3BA3D10D35FFD829864F586 /* Pods_TeamsMembers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE9F83096EBC4C8993E22024 /* Pods_TeamsMembers.framework */; };
 /* End PBXBuildFile section */
 
@@ -51,6 +52,7 @@
 		34414AF722755AFE00F749EA /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 		34414AF922755C6E00F749EA /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		34414AFB2276050600F749EA /* PlayerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerTableViewCell.swift; sourceTree = "<group>"; };
+		34F0A3D22276B5AF00B68F89 /* DetailPlayerTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPlayerTableViewController.swift; sourceTree = "<group>"; };
 		EE9F83096EBC4C8993E22024 /* Pods_TeamsMembers.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TeamsMembers.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -126,6 +128,7 @@
 				34414AE9227540FB00F749EA /* TeamViewController.swift */,
 				34414AF52275564E00F749EA /* PlayerListViewController.swift */,
 				34414AF722755AFE00F749EA /* PlayerViewController.swift */,
+				34F0A3D22276B5AF00B68F89 /* DetailPlayerTableViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -323,6 +326,7 @@
 				34414AEA227540FB00F749EA /* TeamViewController.swift in Sources */,
 				34414AF62275564E00F749EA /* PlayerListViewController.swift in Sources */,
 				34414AEE2275439B00F749EA /* Team.swift in Sources */,
+				34F0A3D32276B5AF00B68F89 /* DetailPlayerTableViewController.swift in Sources */,
 				34414AF822755AFE00F749EA /* PlayerViewController.swift in Sources */,
 				34414AFA22755C6E00F749EA /* Player.swift in Sources */,
 				34414AE522753F3500F749EA /* FirebaseManager.swift in Sources */,

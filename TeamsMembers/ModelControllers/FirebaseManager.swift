@@ -241,7 +241,7 @@ class FirebaseManager {
     
     
     
-    func uploadPlayer(team:Team, name:String, image:UIImage, completion: @escaping(Bool) -> Void ){
+    func uploadPlayer(team:Team, name:String, image:UIImage, height:String,weight :String, fouls:String, points:String, completion: @escaping(Bool) -> Void ){
         
         let filename = "avatar.png"
         let boundary = UUID().uuidString
@@ -291,7 +291,7 @@ class FirebaseManager {
                     completion(false)
                     return
                 }
-                let player = Player(name: name, image: responseString, team:teamRef,  documentReference: nil)
+                let player = Player(name: name, image: responseString,team:teamRef, height:height,weight :weight, fouls:fouls, points:points,  documentReference: nil)
                 let playerDocumentID = UUID().uuidString
                 self.db.collection("player").document(playerDocumentID).setData(player.dictionaryRepresentation) { error in
                     if let error = error {
@@ -321,7 +321,7 @@ class FirebaseManager {
     }
     
     
-    func updatePlayer(player:Player,name:String, image:UIImage, completion: @escaping(Bool) -> Void ){
+    func updatePlayer(player:Player,name:String, image:UIImage,height:String,weight :String, fouls:String, points:String, completion: @escaping(Bool) -> Void ){
         
         let filename = "avatar.png"
         let boundary = UUID().uuidString
@@ -368,6 +368,10 @@ class FirebaseManager {
                 playerRef.updateData([
                     "name" : name,
                     "image" : responseString,
+                    "height" : height,
+                    "weight" : weight,
+                    "fouls" : fouls,
+                    "points" : points,
                 ]) { error in
                     if let error = error {
                         print("Error updating player: \((error, error.localizedDescription))")
